@@ -6,7 +6,7 @@
 ##############################################################
 
 #TODO: Fill up the contents below in order to reference your assignment 3 git contents
-AESD_ASSIGNMENTS_VERSION = 803868aef79b0d34cf4cf19957a757f788f24bc9
+AESD_ASSIGNMENTS_VERSION = 119396eac76cf1e2f95e43819486aeb34a68e326
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
@@ -17,8 +17,9 @@ AESD_ASSIGNMENTS_GIT_SUBMODULES = YES
 define AESD_ASSIGNMENTS_BUILD_CMDS
     # Build the socket server
     $(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/server all
-    # Build the kernel module
-    $(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/aesd-char-driver all
+
+    # Build the kernel module using Buildroot's kernel variables
+    $(MAKE) -C $(LINUX_DIR) M=$(@D)/aesd-char-driver modules
 endef
 
 define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
@@ -31,10 +32,12 @@ define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
     $(INSTALL) -m 0755 $(@D)/aesd-char-driver/aesdchar_unload $(TARGET_DIR)/usr/bin/
     
     # Install the Init script
-    $(INSTALL) -m 0755 $(@D)/aesd-char-driver/S98aesdsocket $(TARGET_DIR)/etc/init.d/
+    $(INSTALL) -m 0755 $(@D)/aesd-char-driver/S99aesdsocket.sh $(TARGET_DIR)/etc/init.d/S99aesdsocket
     
     # Keep your old finder-app stuff if you need it for the autotester
     $(INSTALL) -d 0755 $(TARGET_DIR)/etc/finder-app/conf/
     $(INSTALL) -m 0755 $(@D)/conf/* $(TARGET_DIR)/etc/finder-app/conf/
     $(INSTALL) -m 0755 $(@D)/assignment-autotest/test/assignment8/* $(TARGET_DIR)/usr/bin/
 endef
+
+$(eval $(generic-package))
