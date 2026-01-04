@@ -11,6 +11,9 @@ jobs:
         runs-on: self-hosted
         steps:
           - uses: actions/checkout@v2
+            with:
+              # shut up for now
+              submodules: false
           - name: Fix safe directory and Checkout submodules
             run: |
               git config --global --add safe.directory /__w/assignment-8-happysmaran/assignment-8-happysmaran
