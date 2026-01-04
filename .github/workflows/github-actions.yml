@@ -29,7 +29,7 @@ jobs:
                 -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
                 -w ${GITHUB_WORKSPACE} \
                 -e FORCE_UNSAFE_CONFIGURE=1 \
-                -e BR2_DOWNLOAD_FORCE_CHECK_HASHES= \
+                -e BR2_DOWNLOAD_FORCE_CHECK_HASHES=n \
                 cuaesd/aesd-autotest:24-assignment7 \
                 bash -c "apt-get update && \
                      apt-get install -y file wget cpio rsync unzip bc && \
