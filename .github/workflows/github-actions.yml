@@ -29,7 +29,9 @@ jobs:
                 -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
                 -w ${GITHUB_WORKSPACE} \
                 cuaesd/aesd-autotest:24-assignment7 \
-                bash -c "apt-get update && apt-get install -y file && ./build.sh"
+                bash -c "apt-get update && \
+                     apt-get install -y file wget cpio rsync unzip bc && \
+                     ./build.sh"
 
             - name: Run full test
               timeout-minutes: 60
