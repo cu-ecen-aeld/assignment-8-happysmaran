@@ -30,3 +30,12 @@ jobs:
                 -w ${GITHUB_WORKSPACE} \
                 cuaesd/aesd-autotest:24-assignment7 \
                 ./build.sh
+
+            - name: Run full test
+              timeout-minutes: 60
+              run: |
+                 docker run --rm \
+                 -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+                 -w ${GITHUB_WORKSPACE} \
+                 cuaesd/aesd-autotest:24-assignment7 \
+                 ./full-test.sh
