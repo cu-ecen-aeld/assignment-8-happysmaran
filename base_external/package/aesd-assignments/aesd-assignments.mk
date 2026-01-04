@@ -6,7 +6,7 @@
 ##############################################################
 
 #TODO: Fill up the contents below in order to reference your assignment 3 git contents
-AESD_ASSIGNMENTS_VERSION = 119396eac76cf1e2f95e43819486aeb34a68e326
+AESD_ASSIGNMENTS_VERSION = bf0022e1f92eb8bda83f60f65c83f2d0c3ba9160
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
@@ -18,8 +18,11 @@ define AESD_ASSIGNMENTS_BUILD_CMDS
     # Build the socket server
     $(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/server all
 
-    # Build the kernel module using Buildroot's kernel variables
-    $(MAKE) -C $(LINUX_DIR) M=$(@D)/aesd-char-driver modules
+    # Build the kernel module using the full path to the cross-compiler
+    $(MAKE) -C $(LINUX_DIR) \
+        ARCH=arm64 \
+        CROSS_COMPILE=$(TARGET_CROSS) \
+        M=$(@D)/aesd-char-driver modules
 endef
 
 define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
