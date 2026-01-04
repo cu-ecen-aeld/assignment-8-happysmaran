@@ -7,16 +7,20 @@ on:
             - '*'
 jobs:
     full-test:
-        container: cuaesd/aesd-autotest:24-assignment7
+        container: cuaesd/aesd-autotest:24-assignment8
         runs-on: self-hosted
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v4
             with:
               # shut up for now
               submodules: false
           - name: Fix safe directory and Checkout submodules
             run: |
-              git config --global --add safe.directory /__w/assignment-8-happysmaran/assignment-8-happysmaran
+              git config --global --add safe.directory '*'
+              
+              git submodule init
+              git submodule sync
+              
               git submodule update --init --recursive
           - name: Checkout submodules
             run : git submodule update --init --recursive
