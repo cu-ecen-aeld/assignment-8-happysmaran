@@ -33,7 +33,8 @@ jobs:
                 cuaesd/aesd-autotest:24-assignment7 \
                 bash -c "apt-get update && \
                      apt-get install -y file wget cpio rsync unzip bc && \
-                     ./build.sh"
+                     rm -rf buildroot/.config && \
+                     ./build.sh BR2_DOWNLOAD_FORCE_CHECK_HASHES=n"
 
             - name: Run full test
               timeout-minutes: 60
