@@ -43,4 +43,4 @@ jobs:
                  -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
                  -w ${GITHUB_WORKSPACE} \
                  cuaesd/aesd-autotest:24-assignment7 \
-                 ./full-test.sh
+                 bash -c "rm -rf build/ && ./full-test.sh"
