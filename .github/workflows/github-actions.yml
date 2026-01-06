@@ -12,7 +12,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
               with:
-                clean: true
+                clean: false
                 submodules: false        # We will handle this manually to avoid the error
 
             - name: Manual Submodule Sync
@@ -21,7 +21,6 @@ jobs:
                 git submodule sync
                 git submodule update --init --recursive assignment-autotest
                 git submodule update --init buildroot
-
             - name: Run build
               timeout-minutes: 600
               run: |
@@ -29,13 +28,10 @@ jobs:
                 -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
                 -w ${GITHUB_WORKSPACE} \
                 -e FORCE_UNSAFE_CONFIGURE=1 \
-                -e BR2_DOWNLOAD_FORCE_CHECK_HASHES=n \
                 cuaesd/aesd-autotest:24-assignment7 \
                 bash -c "apt-get update && \
                      apt-get install -y file wget cpio rsync unzip bc && \
-                     rm -rf buildroot/.config && \
-                     ./build.sh BR2_DOWNLOAD_FORCE_CHECK_HASHES=n"
-
+                     ./build.sh"
             - name: Run full test
               timeout-minutes: 60
               run: |
@@ -43,4 +39,4 @@ jobs:
                  -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
                  -w ${GITHUB_WORKSPACE} \
                  cuaesd/aesd-autotest:24-assignment7 \
-                 bash -c "rm -rf build/ && ./full-test.sh"
+                 ./full-test.sh
