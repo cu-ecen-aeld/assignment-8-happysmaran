@@ -31,6 +31,7 @@ jobs:
                 cuaesd/aesd-autotest:24-assignment7 \
                 bash -c "apt-get update && \
                      apt-get install -y file wget cpio rsync unzip bc openssh-client && \
+                     mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts && \
                      ./build.sh"
             - name: Run full test
               timeout-minutes: 60
