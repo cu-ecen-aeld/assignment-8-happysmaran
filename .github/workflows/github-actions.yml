@@ -29,6 +29,8 @@ jobs:
               run: |
                 docker run --rm \
                 -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+                -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+                -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
                 -w ${GITHUB_WORKSPACE} \
                 -e FORCE_UNSAFE_CONFIGURE=1 \
                 cuaesd/aesd-autotest:24-assignment7 \
