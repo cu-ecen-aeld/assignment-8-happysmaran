@@ -14,13 +14,16 @@ jobs:
               with:
                 clean: false
                 submodules: false        # We will handle this manually to avoid the error
-
             - name: Manual Submodule Sync
               run: |
                 git config --global --add safe.directory '*'
                 git submodule sync
                 git submodule update --init --recursive assignment-autotest
                 git submodule update --init buildroot
+            - name: Setup SSH
+              uses: webfactory/ssh-agent@v0.9.0
+              with:
+                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             - name: Run build
               timeout-minutes: 600
               run: |
